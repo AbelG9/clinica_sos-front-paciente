@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
+import SideBar from '../../components/sidebar/SideBar';
+import Content from '../../components/content/Content';
 
 const Home = () => {
+  const [sidebarIsOpen, setSidebarOpen] = useState(true);
+  const toggleSidebar = () => setSidebarOpen(!sidebarIsOpen);
   return (
-    <div>
-      Home view
+    <div className="App wrapper">
+      <SideBar toggle={toggleSidebar} isOpen={sidebarIsOpen} />
+      <Content toggleSidebar={toggleSidebar} sidebarIsOpen={sidebarIsOpen} />
     </div>
   );
 }
