@@ -14,25 +14,36 @@ import { Link } from "react-router-dom";
 
 import SubMenu from "./SubMenu";
 
-const SideBar = ({ isOpen, toggle }) => (
+const SideBar = ({ isOpen, toggle, allowedRoutes }) => (
   <div className={classNames("sidebar", { "is-open": isOpen })}>
     <div className="sidebar-header">
       <span color="info" onClick={toggle} style={{ color: "#fff" }}>
         &times;
       </span>
-      <h3>Bootstrap Sidebar</h3>
+      <Link to="/dashboard"><h3>Clinica Fairdent</h3></Link>
     </div>
     <div className="side-menu">
       <Nav vertical className="list-unstyled pb-3">
-        <p>Dummy Heading</p>
-        <SubMenu title="Home" icon={faHome} items={submenus[0]} />
-        <NavItem>
+        <p>victor chambilla</p>
+        {/* <SubMenu title="Home" icon={faHome} items={submenus[0]} /> */}
+        {/* <NavItem>
           <NavLink tag={Link} to={"/about"}>
-            <FontAwesomeIcon icon={faBriefcase} className="mr-2" />
-            About
+            <FontAwesomeIcon icon={faHome} className="mr-2" />
+            Home
           </NavLink>
-        </NavItem>
-        <SubMenu title="Pages" icon={faCopy} items={submenus[1]} />
+        </NavItem> */}
+        {
+          allowedRoutes.map((route) => {
+            return(
+              <NavItem key={route.url}>
+                <NavLink tag={Link} to={route.url}>
+                  {route.title}
+                </NavLink>
+              </NavItem>
+            )
+          })
+        }
+        {/* <SubMenu title="Pages" icon={faCopy} items={submenus[1]} />
         <NavItem>
           <NavLink tag={Link} to={"/pages"}>
             <FontAwesomeIcon icon={faImage} className="mr-2" />
@@ -50,7 +61,7 @@ const SideBar = ({ isOpen, toggle }) => (
             <FontAwesomeIcon icon={faPaperPlane} className="mr-2" />
             Contact
           </NavLink>
-        </NavItem>
+        </NavItem> */}
       </Nav>
     </div>
   </div>

@@ -12,7 +12,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 
-const Topbar = ({ toggleSidebar }) => {
+const Topbar = ({ toggleSidebar, routes }) => {
   const [topbarIsOpen, setTopbarOpen] = useState(false);
   const toggleTopbar = () => setTopbarOpen(!topbarIsOpen);
 
@@ -29,26 +29,17 @@ const Topbar = ({ toggleSidebar }) => {
       <NavbarToggler onClick={toggleTopbar} />
       <Collapse isOpen={topbarIsOpen} navbar>
         <Nav className="ml-auto" navbar>
-          <NavItem>
-            <NavLink tag={Link} to={"/page-1"}>
-              page 1
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink tag={Link} to={"/page-2"}>
-              page 2
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink tag={Link} to={"/page-3"}>
-              page 3
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink tag={Link} to={"/page-4"}>
-              page 4
-            </NavLink>
-          </NavItem>
+          {
+            routes.map((route) => {
+              return(
+                <NavItem key={route.url}>
+                  <NavLink tag={Link} to={route.url}>
+                    {route.title}
+                  </NavLink>
+                </NavItem>
+              )
+            })
+          }
         </Nav>
       </Collapse>
     </Navbar>
