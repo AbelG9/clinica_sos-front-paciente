@@ -84,7 +84,6 @@ const rolesConfig = {
 	},
 	customer: {
 		routes: [
-			components.Dashboard,
 			components.Pacientes,
 		]
 	},

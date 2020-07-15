@@ -31,7 +31,7 @@ const Topbar = ({ toggleSidebar, routes }) => {
       <NavbarToggler onClick={toggleTopbar} />
       <Collapse isOpen={topbarIsOpen} navbar>
         <Nav className="ml-auto" navbar>
-          {
+          {/* {
             routes.map((route) => {
               return(
                 <NavItem key={route.url}>
@@ -41,7 +41,7 @@ const Topbar = ({ toggleSidebar, routes }) => {
                 </NavItem>
               )
             })
-          }
+          } */}
           <NavItem>
             <NavLink tag={Link} to="/" onClick={() => dispatch({ type: 'SIGNOUT'})} >
               Cerrar sesión

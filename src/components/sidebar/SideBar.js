@@ -4,18 +4,22 @@ import classNames from "classnames";
 import { Link } from "react-router-dom";
 
 // import SubMenu from "./SubMenu";
+// JSON.parse(localStorage.getItem('data')).access_token
 
-const SideBar = ({ isOpen, toggle, allowedRoutes }) => (
-  <div className={classNames("sidebar", { "is-open": isOpen })}>
+const SideBar = ({ isOpen, toggle, allowedRoutes }) => {
+  const nameUser = JSON.parse(localStorage.getItem('data')).full_name;
+
+  return (
+    <div className={classNames("sidebar", { "is-open": isOpen })}>
     <div className="sidebar-header">
       <span color="info" onClick={toggle} style={{ color: "#fff" }}>
         &times;
       </span>
-      <Link to="/dashboard"><h3>Clinica Fairdent</h3></Link>
+      <Link to="/pacientes"><h3>Clinica Fairdent</h3></Link>
     </div>
     <div className="side-menu">
       <Nav vertical className="list-unstyled pb-3">
-        <p>victor chambilla</p>
+        <p>{nameUser}</p>
         {/* <SubMenu title="Home" icon={faHome} items={submenus[0]} /> */}
         {/* <NavItem>
           <NavLink tag={Link} to={"/about"}>
@@ -56,7 +60,8 @@ const SideBar = ({ isOpen, toggle, allowedRoutes }) => (
       </Nav>
     </div>
   </div>
-);
+  )
+};
 
 // const submenus = [
 //   [

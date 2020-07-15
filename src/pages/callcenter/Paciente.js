@@ -65,7 +65,7 @@ const Paciente = () => {
                         <td>{paciente.pac_name+' '+paciente.pac_lastname}</td>
                         <td>{paciente.pac_phone}</td>
                         <td>{paciente.pac_document}</td>
-                        <td>{'no paso'}</td>
+                        <td>{paciente.fech_update}</td>
                       </tr>
                     )
                   })
@@ -74,6 +74,18 @@ const Paciente = () => {
               }
             </tbody>
           </Table>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col d-flex justify-content-center">
+          <Paginator 
+            data={data}
+            setData={setData}
+            paginator={paginator}
+            setPaginator={setPaginator}
+            setDataUrl={setDataUrl}
+            dataUrl={dataUrl}
+          />
         </div>
       </div>
     </div>

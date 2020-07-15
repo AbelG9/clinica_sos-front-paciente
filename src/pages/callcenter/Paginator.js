@@ -20,6 +20,12 @@ const Paginator = ({ data, setData, paginator, setPaginator, setDataUrl, dataUrl
     pushNumbers();
   }, [number]);
 
+  const handleNext = () => {
+    setDataUrl(paginator.next_page_url);
+    if (number[number.length-1]) {
+      console.log(number[number.length-1]);
+    }
+  }
   
   if(typeof paginator != 'undefined') {
     return (
@@ -42,7 +48,7 @@ const Paginator = ({ data, setData, paginator, setPaginator, setDataUrl, dataUrl
           })
         }
         <PaginationItem>
-          <PaginationLink next href="#" onClick={() => {setDataUrl(paginator.next_page_url)}} />
+          <PaginationLink next href="#" onClick={() => handleNext()} />
         </PaginationItem>
         <PaginationItem>
           <PaginationLink last href="#" onClick={() => {setDataUrl(paginator.last_page_url)}} />

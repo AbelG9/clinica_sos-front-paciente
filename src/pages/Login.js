@@ -19,9 +19,15 @@ const Login = () => {
     e.preventDefault();
     Axios.post(`http://localhost/clinica_sos-back/api/staff/login`, { credentials })
       .then(res => {
-          console.log(res.data);
-          dispatch({ type: 'SIGNIN', payload: res.data})
-          history.push('/dashboard');
+          let response = res.data; 
+          console.log(response);
+          if (response.success) {
+            dispatch({ type: 'SIGNIN', payload: response.user})
+            history.push('/pacientes');
+          } else {
+            alert(response.message)
+          }
+          
       });
   }
 
@@ -70,7 +76,7 @@ const Login = () => {
     )
   } else {
     return (
-      <Redirect to="/home" />
+      <Redirect to="/pacientes" />
     )
   }
 }
