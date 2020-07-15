@@ -1,14 +1,13 @@
 import React, { useContext, useState } from 'react';
-import { Route, Redirect, useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import '../assets/styles/Login.css';
 import LoginSVG from '../assets/img/login.svg'
 import { AuthContext } from '../contexts/AuthContext'
-import Home from './callcenter/Home';
 import Axios from 'axios';
 
 const Login = () => {
   let history = useHistory();
-  const { state, dispatch } = useContext(AuthContext)
+  const { dispatch } = useContext(AuthContext)
   const [credentials, setCredentials] = useState(
     {
       user: '',

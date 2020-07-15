@@ -86,7 +86,6 @@ const rolesConfig = {
 		routes: [
 			components.Dashboard,
 			components.Pacientes,
-			components.calledPatient,
 		]
 	},
 	common: {

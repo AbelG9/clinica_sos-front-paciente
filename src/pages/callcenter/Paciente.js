@@ -1,7 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table } from 'reactstrap';
+import Axios from 'axios';
+import URL from '../../config/URL'
 
-const Paciente = (props) => {
+const Paciente = () => {
+  const [data, setData] = useState();
+
+  const getPatient = async () => {
+    try {
+      let token = JSON.parse(localStorage.getItem('data')).access_token;
+      const config = {
+        headers: { Authorization: `Bearer ${token}` }
+      };
+      let res = await Axios.get(`${URL}staff/patientList`, config);
+      let response = await res.data;
+      setData(response.data);
+    } catch (e) {
+        console.log(e)
+    }
+  };
+
+  useEffect(() => {
+    getPatient();
+  }, []);
+
+  console.log(data)
+
   return (
     <Table hover>
       <thead>
@@ -14,27 +38,22 @@ const Paciente = (props) => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-          <td>@twitter</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-          <td>@twitter</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-          <td>@twitter</td>
-        </tr>
+        {
+          typeof data != 'undefined' ?
+          data.map((paciente, index) => {
+              return (
+                <tr key={index}>
+                  <th scope="row">{paciente.id_paciente}</th>
+                  <td>{paciente.pac_name+' '+paciente.last_name}</td>
+                  <td>{paciente.pac_phone}</td>
+                  <td>{paciente.pac_document}</td>
+                  <td>{'no paso'}</td>
+                </tr>
+              )
+            })
+            :
+          null
+        }
       </tbody>
     </Table>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import classNames from "classnames";
 import { Container } from "reactstrap";
 import Topbar from "./Topbar";
