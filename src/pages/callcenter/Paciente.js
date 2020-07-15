@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Table } from 'reactstrap';
 import Axios from 'axios';
 import URL from '../../config/URL'
+import Paginator from './Paginator';
 
 const Paciente = () => {
   const [data, setData] = useState();
+  const [paginator, setPaginator] = useState();
+  const [dataUrl, setDataUrl] = useState('http://localhost/clinica_sos-back/api/staff/patientList?page=1');
 
   const getPatient = async () => {
     try {
@@ -12,8 +15,10 @@ const Paciente = () => {
       const config = {
         headers: { Authorization: `Bearer ${token}` }
       };
-      let res = await Axios.get(`${URL}staff/patientList`, config);
+      let res = await Axios.get(dataUrl, config);
       let response = await res.data;
+      console.log(response)
+      setPaginator(response);
       setData(response.data);
     } catch (e) {
         console.log(e)
@@ -22,40 +27,56 @@ const Paciente = () => {
 
   useEffect(() => {
     getPatient();
-  }, []);
-
-  console.log(data)
+  }, [dataUrl]);
 
   return (
-    <Table hover>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Nombres</th>
-          <th>Celular</th>
-          <th>DNI</th>
-          <th>Triaje</th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          typeof data != 'undefined' ?
-          data.map((paciente, index) => {
-              return (
-                <tr key={index}>
-                  <th scope="row">{paciente.id_paciente}</th>
-                  <td>{paciente.pac_name+' '+paciente.last_name}</td>
-                  <td>{paciente.pac_phone}</td>
-                  <td>{paciente.pac_document}</td>
-                  <td>{'no paso'}</td>
-                </tr>
-              )
-            })
-            :
-          null
-        }
-      </tbody>
-    </Table>
+    <div className="container">
+      <div className="row">
+        <div className="col d-flex justify-content-center">
+          <Paginator 
+            data={data}
+            setData={setData}
+            paginator={paginator}
+            setPaginator={setPaginator}
+            setDataUrl={setDataUrl}
+            dataUrl={dataUrl}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col">
+          <Table hover>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nombres</th>
+                <th>Celular</th>
+                <th>DNI</th>
+                <th>Triaje</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                typeof data != 'undefined' ?
+                data.map((paciente, index) => {
+                    return (
+                      <tr key={index}>
+                        <th scope="row">{paciente.id_paciente}</th>
+                        <td>{paciente.pac_name+' '+paciente.pac_lastname}</td>
+                        <td>{paciente.pac_phone}</td>
+                        <td>{paciente.pac_document}</td>
+                        <td>{'no paso'}</td>
+                      </tr>
+                    )
+                  })
+                  :
+                null
+              }
+            </tbody>
+          </Table>
+        </div>
+      </div>
+    </div>
   );
 }
 

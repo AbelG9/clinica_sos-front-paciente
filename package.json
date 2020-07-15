@@ -1,5 +1,6 @@
 {
   "name": "clinica_sos-front-staff",
+  "homepage": "http://dashboard.grupo-sos.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

@@ -5,7 +5,7 @@ import PatientCalled from '../pages/callcenter/PatientCalled';
 // Private routes.
 const AdminOnly = () => <div>admin</div>;
 const Users = () => <div>Users</div>;
-const Dashboard = () => <div>Dashboard</div>;
+const Dashboard = () => <div>En desarrollo</div>;
 const Manager = () => <div>Manager</div>;
 const Customers = () => <div>Customers</div>;
 const Service1 = () => <div>Service1</div>;
