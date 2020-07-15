@@ -48,6 +48,13 @@ const components = {
 		title: 'Pacientes',
 		icon: 'menu',
 		module: 1
+	},
+	calledPatient: {
+		component: 'calledPatient',
+		url: '/calledPatient',
+		title: 'Pacientes LLamados',
+		icon: 'menu',
+		module: 1
 	}
 };
 
@@ -76,7 +83,11 @@ const rolesConfig = {
 		]
 	},
 	customer: {
-		routes: [components.Dashboard, components.Pacientes]
+		routes: [
+			components.Dashboard,
+			components.Pacientes,
+			components.calledPatient,
+		]
 	},
 	common: {
 		routes: [

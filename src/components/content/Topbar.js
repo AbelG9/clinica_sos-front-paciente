@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAlignLeft } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -11,8 +11,10 @@ import {
   NavLink,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Topbar = ({ toggleSidebar, routes }) => {
+  const { dispatch } = useContext(AuthContext)
   const [topbarIsOpen, setTopbarOpen] = useState(false);
   const toggleTopbar = () => setTopbarOpen(!topbarIsOpen);
 
@@ -40,6 +42,11 @@ const Topbar = ({ toggleSidebar, routes }) => {
               )
             })
           }
+          <NavItem>
+            <NavLink tag={Link} to="/" onClick={() => dispatch({ type: 'SIGNOUT'})} >
+              Sign Out
+            </NavLink>
+          </NavItem>
         </Nav>
       </Collapse>
     </Navbar>

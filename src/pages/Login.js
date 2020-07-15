@@ -4,6 +4,7 @@ import '../assets/styles/Login.css';
 import LoginSVG from '../assets/img/login.svg'
 import { AuthContext } from '../contexts/AuthContext'
 import Home from './callcenter/Home';
+import Axios from 'axios';
 
 const Login = () => {
   let history = useHistory();
@@ -17,8 +18,12 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch({ type: 'SIGNIN', payload: credentials})
-    history.push('/home');
+    Axios.post(`http://localhost/clinica_sos-back/api/staff/login`, { credentials })
+      .then(res => {
+          console.log(res.data);
+          dispatch({ type: 'SIGNIN', payload: res.data})
+          history.push('/dashboard');
+      });
   }
 
   const handleChange = (e) => {
@@ -30,7 +35,7 @@ const Login = () => {
     )
   }
 
-  if (!state.AuthStatus) {
+  if (!localStorage.getItem('AuthStatus')) {
     return (
       <div className="container-fluid h-100 d-flex flex-column justify-content-center align-items-center">
       <div className=" shadow d-flex flex-row rounded" style={{ backgroundColor: 'white' }}>

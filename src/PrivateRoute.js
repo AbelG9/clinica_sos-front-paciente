@@ -4,12 +4,12 @@ import { AuthContext } from './contexts/AuthContext'
 
 function PrivateRoute({ component: Component, ...rest }) {
   const { state } = useContext(AuthContext);
-
+  console.log();
   return(
     <Route
       {...rest}
       render={props =>
-        state.AuthStatus ? (
+        localStorage.getItem('AuthStatus') ? (
           <Component {...props} />
         ) : (
           <Redirect

@@ -1,10 +1,18 @@
 export const AuthReducer = (state, action) => {
-  switch (action.type) {
-      case 'SIGNIN':
-          return {...state, data: action.payload.user, token:action.payload.pass, AuthStatus:true }
-      case 'SIGNOUT':
-          return { ...state, data: '', token: '', AuthStatus: false }
-      default:
-          return state;
-  }
+    switch (action.type) {
+        case "SIGNIN":
+            localStorage.setItem('data', JSON.stringify(action.payload));
+            localStorage.setItem('AuthStatus', true);
+            return {
+                ...state,
+                data: action.payload,
+                AuthStatus: true,
+            };
+        case "SIGNOUT":
+            localStorage.removeItem('data');
+            localStorage.removeItem('AuthStatus');
+            return { ...state, data: "", AuthStatus: false };
+        default:
+            return state;
+    }
 };
