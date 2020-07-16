@@ -4,6 +4,7 @@ import '../assets/styles/Login.css';
 import LoginSVG from '../assets/img/login.svg'
 import { AuthContext } from '../contexts/AuthContext'
 import Axios from 'axios';
+import URL from '../config/URL';
 
 const Login = () => {
   let history = useHistory();
@@ -17,7 +18,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    Axios.post(`http://localhost/clinica_sos-back/api/staff/login`, { credentials })
+    Axios.post(`${URL}staff/login`, { credentials })
       .then(res => {
           let response = res.data; 
           console.log(response);

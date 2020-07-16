@@ -1,46 +1,76 @@
 import React, { useState, useEffect } from 'react';
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 
-const Paginator = ({ data, setData, paginator, setPaginator, setDataUrl, dataUrl }) => {
+const Paginator = ({ paginator, setPage, page }) => {
 
   const [number, setNumber] = useState([1,2,3,4,5,6,7,8,9,10]);
-  let numero = [];
+  
 
-  const pushNumbers = () => {
-    if(typeof paginator != 'undefined') {
-      for (let index = paginator.from; index <= paginator.to; index++) {
-        numero.push(index);
-        console.log(numero);
-      }
-      setNumber(numero);
+  const handleNumbers = (value) => {
+    let ArrayNumber = [];
+    let start = page;
+    let end = page + 9;
+    for (let index = start; index <= end; index++) {
+      ArrayNumber.push(index);
     }
+    return ArrayNumber;
   }
 
   useEffect(() => {
-    pushNumbers();
-  }, [number]);
+    if ((parseInt(number[number.length-1]+1) === page)) {
+      setNumber(handleNumbers(page));
+    } else if ((parseInt(number[0]) - 1) === page) {
+      setNumber(handleNumbers(page));
+    }
+  }, [page]);
 
   const handleNext = () => {
-    setDataUrl(paginator.next_page_url);
-    if (number[number.length-1]) {
-      console.log(number[number.length-1]);
+    if (page === paginator.last_page) {
+      setPage(page);
+    } else {
+      setPage(page + 1);
     }
+  }
+
+  const handleBack = () => {
+    if (page === 1) {
+      setPage(1);
+    } else {
+      setPage(page - 1);
+      // if ((number[0]-1) === (paginator.current_page - 1)) {
+      //   setCurrentFace(currentFace - 10);
+      //   setNumber(handleNumbers(currentFace));
+      // }
+    }
+  }
+
+  const handlePage = (current) => {
+    setPage(current);
+
+  }
+
+  const handleFirst = () => {
+    setPage(1);
+  }
+
+  const handleLast = () => {
+    setPage(paginator.last_page);
   }
   
   if(typeof paginator != 'undefined') {
     return (
       <Pagination aria-label="Page navigation example">
-        <PaginationItem onClick={() => {setDataUrl(paginator.first_page_url)}} >
+        <PaginationItem onClick={() => handleFirst()} >
           <PaginationLink first href="#" />
         </PaginationItem>
-        <PaginationItem onClick={() => {setDataUrl(paginator.prev_page_url)}} >
+        <PaginationItem onClick={() => handleBack()} >
           <PaginationLink previous href="#" />
         </PaginationItem>
         {
           number.map((page, index) => {
             return (
               <PaginationItem key={index} className={page===paginator.current_page ? "active" : null} >
-                <PaginationLink href="#" onClick={() => {setDataUrl('http://localhost/clinica_sos-back/api/staff/patientList?page='+page)}}>
+                <PaginationLink href="#" onClick={() => handlePage(page)}>
                   {page}
                 </PaginationLink>
               </PaginationItem>
@@ -51,7 +81,7 @@ const Paginator = ({ data, setData, paginator, setPaginator, setDataUrl, dataUrl
           <PaginationLink next href="#" onClick={() => handleNext()} />
         </PaginationItem>
         <PaginationItem>
-          <PaginationLink last href="#" onClick={() => {setDataUrl(paginator.last_page_url)}} />
+          <PaginationLink last href="#" onClick={() => handleLast()} />
         </PaginationItem>
       </Pagination>
     );

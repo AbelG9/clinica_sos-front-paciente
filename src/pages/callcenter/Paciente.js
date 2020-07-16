@@ -7,7 +7,7 @@ import Paginator from './Paginator';
 const Paciente = () => {
   const [data, setData] = useState();
   const [paginator, setPaginator] = useState();
-  const [dataUrl, setDataUrl] = useState('http://localhost/clinica_sos-back/api/staff/patientList?page=1');
+  const [page, setPage] = useState(1);
 
   const getPatient = async () => {
     try {
@@ -15,7 +15,7 @@ const Paciente = () => {
       const config = {
         headers: { Authorization: `Bearer ${token}` }
       };
-      let res = await Axios.get(dataUrl, config);
+      let res = await Axios.get(`${URL}staff/patientList?page=${page}`, config);
       let response = await res.data;
       console.log(response)
       setPaginator(response);
@@ -27,19 +27,16 @@ const Paciente = () => {
 
   useEffect(() => {
     getPatient();
-  }, [dataUrl]);
+  }, [page]);
 
   return (
     <div className="container">
       <div className="row">
         <div className="col d-flex justify-content-center">
-          <Paginator 
-            data={data}
-            setData={setData}
+          <Paginator
+            page={page}
+            setPage={setPage}
             paginator={paginator}
-            setPaginator={setPaginator}
-            setDataUrl={setDataUrl}
-            dataUrl={dataUrl}
           />
         </div>
       </div>
@@ -78,13 +75,10 @@ const Paciente = () => {
       </div>
       <div className="row">
         <div className="col d-flex justify-content-center">
-          <Paginator 
-            data={data}
-            setData={setData}
+          <Paginator
+            page={page}
+            setPage={setPage}
             paginator={paginator}
-            setPaginator={setPaginator}
-            setDataUrl={setDataUrl}
-            dataUrl={dataUrl}
           />
         </div>
       </div>
