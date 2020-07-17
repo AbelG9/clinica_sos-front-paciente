@@ -8,6 +8,7 @@ const Paciente = () => {
   const [data, setData] = useState();
   const [paginator, setPaginator] = useState();
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState('');
 
   const getPatient = async () => {
     try {
@@ -15,9 +16,8 @@ const Paciente = () => {
       const config = {
         headers: { Authorization: `Bearer ${token}` }
       };
-      let res = await Axios.get(`${URL}staff/patientList?page=${page}`, config);
+      let res = await Axios.post(`${URL}staff/patientList?page=${page}`, {search}, config);
       let response = await res.data;
-      console.log(response)
       setPaginator(response);
       setData(response.data);
     } catch (e) {
@@ -27,17 +27,31 @@ const Paciente = () => {
 
   useEffect(() => {
     getPatient();
-  }, [page]);
+  }, [page, search]);
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  }
 
   return (
     <div className="container">
       <div className="row">
-        <div className="col d-flex justify-content-center">
-          <Paginator
-            page={page}
-            setPage={setPage}
-            paginator={paginator}
-          />
+        <div className="col">
+          <form onSubmit={handleSubmit} className="form-inline my-2 my-lg-0">
+            <input 
+              className="form-control mr-sm-2" 
+              type="search" 
+              placeholder="Buscar" 
+              name="search"
+              value={search}
+              onChange={handleSearch} 
+            />
+            <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+          </form>
         </div>
       </div>
       <div className="row">
