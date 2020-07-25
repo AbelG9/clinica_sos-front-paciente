@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Table } from 'reactstrap';
 import Axios from 'axios';
 import URL from '../../config/URL'
 import Paginator from './Paginator';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const Paciente = () => {
   const [data, setData] = useState();
   const [paginator, setPaginator] = useState();
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
+  const { state } = useContext(AuthContext);
 
   const getPatient = async () => {
     try {
-      let token = JSON.parse(localStorage.getItem('data')).access_token;
+      let token = state.data.access_token;
       const config = {
         headers: { Authorization: `Bearer ${token}` }
       };
@@ -27,6 +29,7 @@ const Paciente = () => {
 
   useEffect(() => {
     getPatient();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, search]);
 
   const handleSearch = (e) => {

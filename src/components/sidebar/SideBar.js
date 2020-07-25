@@ -1,44 +1,47 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavItem, NavLink, Nav } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
-
-// import SubMenu from "./SubMenu";
-// JSON.parse(localStorage.getItem('data')).access_token
+import { AuthContext } from "../../contexts/AuthContext";
+import Logo from '../../assets/img/logo.svg';
 
 const SideBar = ({ isOpen, toggle, allowedRoutes }) => {
-  const nameUser = JSON.parse(localStorage.getItem('data')).full_name;
+  const { state } = useContext(AuthContext);
+  const nameUser = state.data.full_name;
 
   return (
-    <div className={classNames("sidebar", { "is-open": isOpen })}>
-    <div className="sidebar-header">
-      <span color="info" onClick={toggle} style={{ color: "#fff" }}>
-        &times;
-      </span>
-      <Link to="/pacientes"><h3>Clinica Fairdent</h3></Link>
-    </div>
-    <div className="side-menu">
-      <Nav vertical className="list-unstyled pb-3">
-        <p>{nameUser}</p>
-        {/* <SubMenu title="Home" icon={faHome} items={submenus[0]} /> */}
-        {/* <NavItem>
+    <div className={classNames("sidebar shadow", { "is-open": isOpen })}>
+      <div className="sidebar-header">
+        <span color="info" onClick={toggle} style={{ color: "#713C8F" }}>
+          &times;
+        </span>
+        <Link to="/pacientes" className="mx-auto">
+          <img src={Logo} alt="Fairdent" className="w-75 mx-3 my-3" />
+        </Link>
+      </div>
+      <div className="side-menu">
+        <Nav vertical className="list-unstyled pb-3">
+          <p>{nameUser}</p>
+          {/* <SubMenu title="Home" icon={faHome} items={submenus[0]} /> */}
+          {/* <NavItem>
           <NavLink tag={Link} to={"/about"}>
             <FontAwesomeIcon icon={faHome} className="mr-2" />
             Home
           </NavLink>
         </NavItem> */}
-        {
-          allowedRoutes.map((route) => {
-            return(
+          {allowedRoutes.map((route) => {
+            return (
               <NavItem key={route.url}>
                 <NavLink tag={Link} to={route.url}>
+                  <FontAwesomeIcon icon={faHome} className="mr-2" />
                   {route.title}
                 </NavLink>
               </NavItem>
-            )
-          })
-        }
-        {/* <SubMenu title="Pages" icon={faCopy} items={submenus[1]} />
+            );
+          })}
+          {/* <SubMenu title="Pages" icon={faCopy} items={submenus[1]} />
         <NavItem>
           <NavLink tag={Link} to={"/pages"}>
             <FontAwesomeIcon icon={faImage} className="mr-2" />
@@ -57,10 +60,10 @@ const SideBar = ({ isOpen, toggle, allowedRoutes }) => {
             Contact
           </NavLink>
         </NavItem> */}
-      </Nav>
+        </Nav>
+      </div>
     </div>
-  </div>
-  )
+  );
 };
 
 // const submenus = [

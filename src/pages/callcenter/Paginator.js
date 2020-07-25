@@ -22,6 +22,7 @@ const Paginator = ({ paginator, setPage, page }) => {
     } else if ((parseInt(number[0]) - 1) === page) {
       setNumber(handleNumbers(page));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   const handleNext = () => {

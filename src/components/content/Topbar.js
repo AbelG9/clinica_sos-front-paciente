@@ -44,7 +44,7 @@ const Topbar = ({ toggleSidebar, routes }) => {
           } */}
           <NavItem>
             <NavLink tag={Link} to="/" onClick={() => dispatch({ type: 'SIGNOUT'})} >
-              Cerrar sesión
+              Salir
             </NavLink>
           </NavItem>
         </Nav>
