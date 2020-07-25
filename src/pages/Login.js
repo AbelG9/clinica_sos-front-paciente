@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useContext } from "react";
 import { Redirect, useHistory, Link } from "react-router-dom";
 import "../assets/styles/Login.css";
 import { AuthContext } from "../contexts/AuthContext";
@@ -6,10 +6,11 @@ import Axios from "axios";
 import URL from "../config/URL";
 import IsoLogo from '../assets/img/isologo.svg';
 import Loader from '../components/Loader';
+import { rolesConfig } from '../config/Roles';
 
 const Login = () => {
   let history = useHistory();
-  const { dispatch } = useContext(AuthContext);
+  const { state, dispatch } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [credentials, setCredentials] = useState({
     user: "",
@@ -23,7 +24,8 @@ const Login = () => {
       let response = res.data;
       if (response.success) {
         dispatch({ type: "SIGNIN", payload: response.user });
-        history.push("/pacientes");
+        let ROUTE = rolesConfig[response.user.role].routes;
+        history.push(ROUTE[0].url);
         setLoading(false);
       } else {
         setLoading(false);
@@ -38,6 +40,13 @@ const Login = () => {
       [e.target.name]: e.target.value,
     });
   };
+
+  const AlreadyLoging = () => {
+    let ROUTE = rolesConfig[state.data.role].routes;
+    return (
+      <Redirect to={ROUTE[0].url} />
+    );
+  }
 
   if (!localStorage.getItem("AuthStatus")) {
     return (
@@ -108,7 +117,7 @@ const Login = () => {
       </div>
     );
   } else {
-    return <Redirect to="/pacientes" />;
+    return AlreadyLoging()
   }
 };
 

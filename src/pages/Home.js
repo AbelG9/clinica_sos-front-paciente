@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import SideBar from '../components/sidebar/SideBar';
 import Content from '../components/content/Content';
 import { rolesConfig } from '../config/Roles';
+import { AuthContext } from '../contexts/AuthContext';
 
 const Home = () => {
+  const { state } = useContext(AuthContext);
   const [sidebarIsOpen, setSidebarOpen] = useState(true);
   const toggleSidebar = () => setSidebarOpen(!sidebarIsOpen);
   const [allowedRoutes, setAllowedRoutes] = useState([]);
+  let ROUTE = rolesConfig[state.data.role].routes;
 
   useEffect(() => {
-    setAllowedRoutes(rolesConfig['customer'].routes);
-  }, []);
+    setAllowedRoutes(ROUTE);
+  }, [ROUTE]);
 
   return (
     <div className="App wrapper">
