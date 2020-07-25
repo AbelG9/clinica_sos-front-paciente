@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import SideBar from '../../components/sidebar/SideBar';
-import Content from '../../components/content/Content';
-import { rolesConfig } from '../../config/Roles';
+import SideBar from '../components/sidebar/SideBar';
+import Content from '../components/content/Content';
+import { rolesConfig } from '../config/Roles';
 
 const Home = () => {
   const [sidebarIsOpen, setSidebarOpen] = useState(true);
