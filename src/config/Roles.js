@@ -21,6 +21,13 @@ const components = {
 		icon: 'menu',
 		module: 1
 	},
+	TaskList: {
+		component: 'TaskLists',
+		url: '/TaskLists',
+		title: 'Tareas',
+		icon: 'menu',
+		module: 1
+	},
 };
 
 // component's access to roles.
@@ -31,6 +38,7 @@ const rolesConfig = {
 	call_center: {
 		routes: [
 			components.Pacientes,
+			components.TaskList,
 		]
 	},
 };
