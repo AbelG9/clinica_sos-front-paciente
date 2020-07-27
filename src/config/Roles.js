@@ -40,7 +40,9 @@ const components = {
 // component's access to roles.
 const rolesConfig = {
 	admin: {
-		routes: [...Object.values(components)]
+		routes: [
+			components.Task,
+		]
 	},
 	call_center: {
 		routes: [

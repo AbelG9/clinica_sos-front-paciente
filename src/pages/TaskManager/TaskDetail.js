@@ -47,7 +47,6 @@ const TaskDetail = () => {
           };
           let res = await Axios.post(`${URL}staff/getTask`, {id}, config);
           let response = await res.data;
-          console.log(response);
           if (response.success) {
             setTask(response.task);
             setLoading(false);
@@ -59,6 +58,7 @@ const TaskDetail = () => {
 
     useEffect(() => {
         getTask();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const enviar = async () => {
@@ -70,7 +70,6 @@ const TaskDetail = () => {
             };
             let res = await Axios.post(`${URL}staff/completeTask`, {id, data}, config);
             let response = await res.data;
-            console.log(response);
             if (response.success) {
                 getTask();
               setLoading(false);

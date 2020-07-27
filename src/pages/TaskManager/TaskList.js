@@ -40,7 +40,6 @@ const TaskList = () => {
         };
         let res = await Axios.post(`${URL}staff/${route}`, {userId}, config);
         let response = await res.data;
-        console.log(response);
         if (response.success) {
           setTasks(response.task);
           setLoading(false);
@@ -50,6 +49,7 @@ const TaskList = () => {
       }
     }
     getPendingTasks();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [route]);
 
   const renderCardTask = () => {

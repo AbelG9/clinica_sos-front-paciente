@@ -1,11 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Table } from 'reactstrap';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
 import { AuthContext } from '../../contexts/AuthContext';
 import URL from '../../config/URL';
-import Loader from '../../components/Loader';
 import GiveTask from './GiveTask';
 import TaskCard from '../TaskManager/TaskCard';
 import Loarder from '../../components/Loader';
@@ -28,7 +25,6 @@ const Task = () => {
               };
               let res = await Axios.post(`${URL}staff/${routeTask}`, {username}, config);
               let response = await res.data;
-              console.log(response);
               if (response.success) {
                 setData(response.task);
                 setLoading(false);
@@ -38,6 +34,7 @@ const Task = () => {
             }
         };
         getFullTask();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [routeTask])
 
     const handleTabs = (e) => {
