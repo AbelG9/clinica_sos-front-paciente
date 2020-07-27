@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import { Breadcrumb, BreadcrumbItem, Alert, Jumbotron } from 'reactstrap';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 import URL from '../../config/URL';
 import Axios from 'axios';
@@ -11,6 +11,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input } 
 
 const TaskDetail = () => {
     let { id } = useParams();
+    let history = useHistory();
     const [loading, setLoading] = useState(false);
     const { state } = useContext(AuthContext);
     const [task, setTask] = useState([]);
@@ -97,12 +98,17 @@ const TaskDetail = () => {
         }
     }
 
+    const goBack = (e) => {
+        e.preventDefault();
+        history.goBack();
+    }
+
     return (
         <Fragment>
             <div className="row no-gutters mb-2">
                 <div className="col">
                     <Breadcrumb>
-                        <BreadcrumbItem><Link to="/TaskLists">Tarea pendiente</Link></BreadcrumbItem>
+                        <BreadcrumbItem><Link to="/TaskLists" onClick={goBack}>Tarea pendiente</Link></BreadcrumbItem>
                         <BreadcrumbItem active>Detalle</BreadcrumbItem>
                     </Breadcrumb>
                 </div>
