@@ -1,19 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { FormGroup, Label, Input } from 'reactstrap';
+import { FormGroup, Input } from 'reactstrap';
+import { AuthContext } from '../../contexts/AuthContext';
+import Axios from 'axios';
+import URL from '../../config/URL';
+import Loader from '../../components/Loader';
 
 const CreateTask = () => {
+    let history = useHistory();
+    let { id } = useParams();
+    const { state } = useContext(AuthContext);
+    const [loading, setLoading] = useState(false);
     const [value, setValue] = useState('');
     const [data, setData] = useState({
-        idUser: '',
+        idUser: state.data.id,
         asunto: '',
         detalle: '',
         fechafin: '',
         horafin: '',
-        idTrabajador: '',
+        idTrabajador: id,
     });
 
     const modules = {
@@ -40,6 +48,27 @@ const CreateTask = () => {
         })
     }
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            setLoading(true);
+          let token = state.data.access_token;
+          const config = {
+            headers: { Authorization: `Bearer ${token}` }
+          };
+          let res = await Axios.post(`${URL}staff/addTask`, {data, value}, config);
+          let response = await res.data;
+          if (response.success) {
+            history.push("/Tasks");
+            setLoading(false);
+          }
+          setLoading(false);
+        } catch (e) {
+            console.log(e)
+            setLoading(false);
+        }
+    }
+
     return (
         <div>
             <div className="row">
@@ -52,7 +81,7 @@ const CreateTask = () => {
             </div>
             <div className="row">
                 <div className="col">
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <FormGroup>
                             <h5>Asunto: </h5>
                             <Input 
@@ -86,7 +115,10 @@ const CreateTask = () => {
                                     name="horafin" />
                             </FormGroup>
                         </div>
-                        <button className="btn btn-success">Guardar</button>
+                        {
+                            loading ? <Loader /> : 
+                            <button className="btn btn-success">Guardar</button>
+                        }
                     </form>
                 </div>
             </div>
