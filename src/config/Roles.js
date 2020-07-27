@@ -46,9 +46,13 @@ const rolesConfig = {
 		routes: [
 			components.Pacientes,
 			components.TaskList,
-			components.Task,
 		]
 	},
+	marketing: {
+		routes: [
+			components.TaskList,
+		]
+	}
 };
 
 export { rolesConfig };

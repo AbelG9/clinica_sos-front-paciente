@@ -26,7 +26,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar, allowedRoutes }) => {
           )
         })
       }
-      <PrivateRoute exact path="/TaskLists/taskdetail" component={TaskDetail} />
+      <PrivateRoute exact path="/TaskLists/taskdetail/:id" component={TaskDetail} />
       <PrivateRoute exact path="/Tasks/create/:id" component={CreateTask} />
     </Container>
   )
