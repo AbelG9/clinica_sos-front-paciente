@@ -4,7 +4,8 @@ import { Container } from "reactstrap";
 import Topbar from "./Topbar";
 import PrivateRoute from "../../PrivateRoute";
 import * as Routes from '../../routes/index'
-import TaskDetail from "../../pages/TaskDetail";
+import TaskDetail from "../../pages/TaskManager/TaskDetail";
+import CreateTask from "../../pages/Admin/CreateTask";
 
 const Content = ({ sidebarIsOpen, toggleSidebar, allowedRoutes }) => {
   return (
@@ -26,6 +27,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar, allowedRoutes }) => {
         })
       }
       <PrivateRoute exact path="/TaskLists/taskdetail" component={TaskDetail} />
+      <PrivateRoute exact path="/Tasks/create" component={CreateTask} />
     </Container>
   )
 };

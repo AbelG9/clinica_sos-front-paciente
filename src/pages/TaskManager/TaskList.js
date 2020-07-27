@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../assets/styles/TaskList.css";
 import { Link } from "react-router-dom";
 
 const TaskList = () => {

@@ -28,6 +28,13 @@ const components = {
 		icon: 'menu',
 		module: 1
 	},
+	Task: {
+		component: 'Tasks',
+		url: '/Tasks',
+		title: 'Crear tareas',
+		icon: 'menu',
+		module: 1
+	},
 };
 
 // component's access to roles.
@@ -39,6 +46,7 @@ const rolesConfig = {
 		routes: [
 			components.Pacientes,
 			components.TaskList,
+			components.Task,
 		]
 	},
 };
