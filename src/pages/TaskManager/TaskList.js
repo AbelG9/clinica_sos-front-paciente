@@ -4,41 +4,73 @@ import { AuthContext } from '../../contexts/AuthContext';
 import URL from '../../config/URL';
 import Axios from 'axios';
 import Loader from '../../components/Loader';
+import TaskCard from './TaskCard';
+import { Alert } from 'reactstrap';
 
 const TaskList = () => {
   const [tab, setTab] = useState(2);
   const [loading, setLoading] = useState(false);
   const { state } = useContext(AuthContext);
   const [tasks, setTasks] = useState([]);
+  const [route, setRoute] = useState('getTasks');
 
   const handleTabs = (e) => {
     e.preventDefault();
+    switch (parseInt(e.target.id)) {
+      case 2:
+        setRoute('getTasks');
+        break;
+      case 3:
+        setRoute('getFinishedTasks');
+        break;
+      default:
+        break;
+    }
     setTab(parseInt(e.target.id));
   };
 
-  const getTasks = async () => {
-    try {
-      let userId = state.data.id;
-      setLoading(true);
-      let token = state.data.access_token;
-      const config = {
-        headers: { Authorization: `Bearer ${token}` }
-      };
-      let res = await Axios.post(`${URL}staff/getTasks`, {userId}, config);
-      let response = await res.data;
-      console.log(response);
-      if (response.success) {
-        setTasks(response.task);
-        setLoading(false);
+  useEffect(() => {
+    const getPendingTasks = async () => {
+      try {
+        let userId = state.data.id;
+        setLoading(true);
+        let token = state.data.access_token;
+        const config = {
+          headers: { Authorization: `Bearer ${token}` }
+        };
+        let res = await Axios.post(`${URL}staff/${route}`, {userId}, config);
+        let response = await res.data;
+        console.log(response);
+        if (response.success) {
+          setTasks(response.task);
+          setLoading(false);
+        }
+      } catch (e) {
+          console.log(e)
       }
-    } catch (e) {
-        console.log(e)
+    }
+    getPendingTasks();
+  }, [route]);
+
+  const renderCardTask = () => {
+    if (tasks.length > 0) {
+      return (
+        tasks.map((task) => {
+          return (
+            <TaskCard key={task.id} task={task} />
+          )
+        })
+      )
+    } else {
+      return (
+        <div>
+          <Alert className="text-center" color="success">
+            No hay trabajos!
+          </Alert>
+        </div>
+      )
     }
   }
-
-  useEffect(() => {
-    getTasks();
-  }, []);
 
   const renderSwitch = (page) => {
     switch (page) {
@@ -49,44 +81,27 @@ const TaskList = () => {
           <div>
           {
             loading ? <Loader /> :
-            tasks.map((task) => (
-              <div key={task.id} className="card shadow-sm my-3 mx-3 w-auto">
-                <div className="card-body">
-                  <div className="d-flex flex-row justify-content-center">
-                    <div className="mr-3">
-                      <div className="text-left">
-                        <h5 className="card-title">
-                          {task.asunto}
-                        </h5>
-                      </div>
-                      <div className="text-left">
-                        <small className="text-muted">
-                          publicado: {task.created_at}
-                        </small>
-                      </div>
-                    </div>
-                    <div className="d-flex flex-column justify-content-center">
-                      <small>Finaliza en:</small>
-                      <small className="text-muted">{task.fechafin} {task.horafin}</small>
-                      <Link to={`/TaskLists/taskdetail/${task.id}`} className="btn btn-warning text-white">
-                          Pendiente!
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))
+            renderCardTask()
           }
           </div>
         );
+      case 3:
+        return (
+          <div>
+          {
+            loading ? <Loader /> :
+            renderCardTask()
+          }
+          </div>
+        )
       default:
-        return <div>default</div>;
+        return null;
     }
   };
 
   return (
     <div>
-      <ul className="nav nav-tabs">
+      <ul className="nav nav-tabs d-flex flex-row justify-content-center">
         <li className="nav-item">
           <Link
             className={`nav-link ${tab === 1 ? "active" : ""}`}
