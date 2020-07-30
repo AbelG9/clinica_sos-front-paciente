@@ -19,12 +19,14 @@ const TaskDetail = () => {
     const toggle = () => setModal(!modal);
     const [data, setData] = useState({
         enlace: '',
+        file_name: '',
         comentario: ''
     });
 
     const handleCancelModal = () => {
         setModal(!modal);
         setData({
+            ...data,
             enlace: '',
             comentario: ''
         });
@@ -36,6 +38,23 @@ const TaskDetail = () => {
             ...data,
             [e.target.name]: e.target.value
         });
+    }
+
+    const handleFile = (e) => {
+        e.preventDefault();
+        let files = e.target.files || e.dataTransfer.files;
+        if (!files.length)
+            return;
+        
+        let reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+        reader.onload = (e) => {
+            // console.log(e.target.result);
+            setData({
+                ...data,
+                file_name: e.target.result
+            });
+        };
     }
 
     const getTask = async () => {
@@ -70,6 +89,7 @@ const TaskDetail = () => {
             };
             let res = await Axios.post(`${URL}staff/completeTask`, {id, data}, config);
             let response = await res.data;
+            // console.log(response);
             if (response.success) {
                 getTask();
               setLoading(false);
@@ -88,7 +108,7 @@ const TaskDetail = () => {
                 <Fragment>
                     <button onClick={toggle} className="btn btn-warning">Agregar enlace</button>
                     {
-                        data.enlace.length > 0 ? <button onClick={enviar} className="btn btn-info">Enviar trabajo!</button> : null
+                        data.enlace.length > 0 || data.file_name.length > 0 ? <button onClick={enviar} className="btn btn-info">Enviar trabajo!</button> : null
                     }
                 </Fragment>
             )
@@ -141,7 +161,32 @@ const TaskDetail = () => {
                                 </h5>
                                 <hr/>
                                 <Alert color="dark" className="text-center">
-                                    {data.enlace || task.trabajo}
+                                    {
+                                        data.enlace || 
+                                        <p>
+                                            enlace: <a className="text-info" target="_blank" rel="noopener noreferrer" href={task.trabajo} >{task.trabajo}</a>
+                                        </p>
+                                    }
+                                    {
+                                        data.comentario || task.comentario
+                                    }
+                                </Alert>
+                                <Alert color="secondary" className="text-center">
+                                    {
+                                        task.estado === 'PENDIENTE' ?
+                                        <FormGroup>
+                                            <Input 
+                                                accept="image/*,.pdf"
+                                                value={data.file}
+                                                onChange={handleFile}
+                                                type="file"
+                                                name="file_name"/>
+                                        </FormGroup>
+                                        : 
+                                        <p>
+                                            archivo: <a className="text-info" rel="noopener noreferrer" href={task.file_url} target="_blank">{task.trabajo_file}</a>
+                                        </p>
+                                    }
                                 </Alert>
                                 <div className="text-center">
                                     {btnSendWork()}
