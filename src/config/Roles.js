@@ -35,6 +35,13 @@ const components = {
 		icon: 'menu',
 		module: 1
 	},
+	Report: {
+		component: 'Report',
+		url: '/informe',
+		title: 'Informes',
+		icon: 'menu',
+		module: 1
+	}
 };
 
 // component's access to roles.
@@ -48,11 +55,13 @@ const rolesConfig = {
 		routes: [
 			components.Pacientes,
 			components.TaskList,
+			components.Report
 		]
 	},
 	marketing: {
 		routes: [
 			components.TaskList,
+			components.Report
 		]
 	}
 };
