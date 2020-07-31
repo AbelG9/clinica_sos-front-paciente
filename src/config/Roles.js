@@ -38,6 +38,13 @@ const components = {
 	Report: {
 		component: 'Report',
 		url: '/informe',
+		title: 'Informe',
+		icon: 'menu',
+		module: 1
+	},
+	UserReport: {
+		component: 'UsersReports',
+		url: '/reportUsers',
 		title: 'Informes',
 		icon: 'menu',
 		module: 1
@@ -49,6 +56,7 @@ const rolesConfig = {
 	admin: {
 		routes: [
 			components.Task,
+			components.UserReport,
 		]
 	},
 	call_center: {
