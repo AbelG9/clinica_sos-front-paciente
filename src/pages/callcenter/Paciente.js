@@ -4,6 +4,7 @@ import Axios from 'axios';
 import URL from '../../config/URL'
 import Paginator from './Paginator';
 import { AuthContext } from '../../contexts/AuthContext';
+import Loader from '../../components/Loader';
 
 const Paciente = () => {
   const [data, setData] = useState();
@@ -11,8 +12,10 @@ const Paciente = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const { state } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
 
   const getPatient = async () => {
+    setLoading(true);
     try {
       let token = state.data.access_token;
       const config = {
@@ -20,9 +23,12 @@ const Paciente = () => {
       };
       let res = await Axios.post(`${URL}staff/patientList?page=${page}`, {search}, config);
       let response = await res.data;
+      // console.log(response);
       setPaginator(response);
       setData(response.data);
+      setLoading(false);
     } catch (e) {
+        setLoading(false);
         console.log(e)
     }
   };
@@ -59,35 +65,39 @@ const Paciente = () => {
       </div>
       <div className="row">
         <div className="col">
-          <Table hover>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Nombres</th>
-                <th>Celular</th>
-                <th>DNI</th>
-                <th>Triaje</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                typeof data != 'undefined' ?
-                data.map((paciente, index) => {
-                    return (
-                      <tr key={index}>
-                        <th scope="row">{paciente.id_paciente}</th>
-                        <td>{paciente.pac_name+' '+paciente.pac_lastname}</td>
-                        <td>{paciente.pac_phone}</td>
-                        <td>{paciente.pac_document}</td>
-                        <td>{paciente.fech_update}</td>
-                      </tr>
-                    )
-                  })
-                  :
-                null
-              }
-            </tbody>
-          </Table>
+          {
+            loading ? <Loader /> :
+            <Table hover>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nombres</th>
+                  <th>Celular</th>
+                  <th>DNI</th>
+                  <th>Triaje</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  typeof data != 'undefined' ?
+                  data.map((paciente, index) => {
+                      return (
+                        <tr key={index}>
+                          <th scope="row">{paciente.id_paciente}</th>
+                          <td>{paciente.pac_name+' '+paciente.pac_lastname}</td>
+                          <td>{paciente.pac_phone}</td>
+                          <td>{paciente.pac_document}</td>
+                          <td>{paciente.fech_update}</td>
+                        </tr>
+                      )
+                    })
+                    :
+                  null
+                }
+              </tbody>
+            </Table>
+          }
+          
         </div>
       </div>
       <div className="row">

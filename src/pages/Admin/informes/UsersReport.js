@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Table } from 'reactstrap';
+import { Table, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import Axios from 'axios';
 import { AuthContext } from '../../../contexts/AuthContext';
 import URL from '../../../config/URL';
@@ -41,6 +41,9 @@ const UsersReport = () => {
     return (
         <div>
             <div>
+            <Breadcrumb>
+                <BreadcrumbItem active>Lista de usuarios</BreadcrumbItem>
+            </Breadcrumb>
                 <div>
                     {
                         loading ? <Loader /> : 

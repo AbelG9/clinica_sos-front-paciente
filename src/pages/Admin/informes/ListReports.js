@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import {AuthContext} from "../../../contexts/AuthContext";
 import URL from '../../../config/URL';
 import Axios from 'axios';
-import { Table } from 'reactstrap';
+import { Table, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import Loader from '../../../components/Loader';
 
 const ListReports = () => {
@@ -34,11 +34,16 @@ const ListReports = () => {
 
     useEffect(() => {
         getReportByUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
         <div>
             <div>
+            <Breadcrumb>
+                <BreadcrumbItem><Link to="/reportUsers">Lista de usuarios</Link></BreadcrumbItem>
+                <BreadcrumbItem active>Informes</BreadcrumbItem>
+            </Breadcrumb>
                 <div>
                     {
                         loading ? <Loader /> :

@@ -6,6 +6,7 @@ import URL from '../../config/URL';
 import GiveTask from './GiveTask';
 import TaskCard from '../TaskManager/TaskCard';
 import Loarder from '../../components/Loader';
+import { Alert } from 'reactstrap';
 
 const Task = () => {
     const { state } = useContext(AuthContext);
@@ -55,6 +56,22 @@ const Task = () => {
         setTab(parseInt(e.target.id));
     };
 
+    const checkData = () => {
+      if (data.length > 0) {
+        return (
+          data.map((task) => {
+              return <TaskCard key={task.id} task={task} />
+          })
+        )
+      } else {
+        return (
+          <Alert className="text-center" color="success">
+            No hay trabajos!
+          </Alert>
+        )
+      }
+    }
+
     const renderSwitch = (page) => {
         switch (page) {
             case 1:
@@ -66,17 +83,11 @@ const Task = () => {
                 )
             case 2:
                 return (
-                    loading ? <Loarder /> :
-                    data.map((task) => {
-                        return <TaskCard key={task.id} task={task} />
-                    })
+                    loading ? <Loarder /> : checkData()
                 )
             case 3:
                 return (
-                    loading ? <Loarder /> :
-                    data.map((task) => {
-                        return <TaskCard key={task.id} task={task} />
-                    })
+                    loading ? <Loarder /> : checkData()
                 )
             default:
                 return null;
