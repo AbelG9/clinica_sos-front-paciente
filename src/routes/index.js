@@ -10,9 +10,9 @@ const AdminOnly = () => <div>admin</div>;
 const Dashboard = () => <div>En desarrollo</div>;
 const Pacientes = () => <Paciente />;
 const TaskLists = () => <TaskList />;
-const Tasks = () => <Task />
-const Report = () => <Informe />
-const UsersReports = () => <UsersReport />
+const Tasks = () => <Task />;
+const Report = () => <Informe />;
+const UsersReports = () => <UsersReport />;
 
 export {
 	Dashboard,

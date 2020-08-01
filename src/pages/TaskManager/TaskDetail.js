@@ -8,6 +8,10 @@ import Loader from '../../components/Loader';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input } from 'reactstrap';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const MySwal = withReactContent(Swal)
 
 const TaskDetail = () => {
     let { id } = useParams();
@@ -91,9 +95,19 @@ const TaskDetail = () => {
             let response = await res.data;
             // console.log(response);
             if (response.success) {
+                MySwal.fire({
+                    icon: 'success',
+                    title: 'Éxito!',
+                    text: '¡El trabajo se guardó exitosamente!',
+                });
                 getTask();
-              setLoading(false);
+                setLoading(false);
             } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Algo fue mal!',
+                })
                 setLoading(false);
             }
           } catch (e) {

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { AuthContext } from '../../contexts/AuthContext';
 import URL from '../../config/URL';
 import Axios from 'axios';
@@ -8,11 +8,13 @@ import TaskCard from './TaskCard';
 import { Alert } from 'reactstrap';
 
 const TaskList = () => {
+  let { id } = useParams();
   const [tab, setTab] = useState(2);
   const [loading, setLoading] = useState(false);
   const { state } = useContext(AuthContext);
   const [tasks, setTasks] = useState([]);
   const [route, setRoute] = useState('getTasks');
+  let userId = typeof id === "undefined" ? state.data.id : id;
 
   const handleTabs = (e) => {
     e.preventDefault();
@@ -32,7 +34,6 @@ const TaskList = () => {
   useEffect(() => {
     const getPendingTasks = async () => {
       try {
-        let userId = state.data.id;
         setLoading(true);
         let token = state.data.access_token;
         const config = {
@@ -74,8 +75,6 @@ const TaskList = () => {
 
   const renderSwitch = (page) => {
     switch (page) {
-      case 1:
-        return <div>En desarrollo!</div>;
       case 2:
         return (
           <div>
@@ -102,16 +101,6 @@ const TaskList = () => {
   return (
     <div>
       <ul className="nav nav-tabs d-flex flex-row justify-content-center">
-        <li className="nav-item">
-          <Link
-            className={`nav-link ${tab === 1 ? "active" : ""}`}
-            id="1"
-            to="/"
-            onClick={handleTabs}
-          >
-            Anuncios
-          </Link>
-        </li>
         <li className="nav-item">
           <Link
             className={`nav-link ${tab === 2 ? "active" : ""}`}

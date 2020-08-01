@@ -40,6 +40,7 @@ const Informe = () => {
     }
 
     const saveReport = async () => {
+        setLoading(true);
         try {
             let token = state.data.access_token;
             const config = {
@@ -62,8 +63,10 @@ const Informe = () => {
                     text: 'Algo fue mal!',
                 })
             }
+            setLoading(false);
         } catch (e) {
             console.log(e)
+            setLoading(false);
         }
         setModal(!modal)
     } 
