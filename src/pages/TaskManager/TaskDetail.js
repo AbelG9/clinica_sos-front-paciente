@@ -110,10 +110,15 @@ const TaskDetail = () => {
                 })
                 setLoading(false);
             }
-          } catch (e) {
-                setLoading(false);
+        } catch (e) {
+              setLoading(false);
               console.log(e)
-          }
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Algo fue mal!',
+              })
+        }
     }
 
     const btnSendWork = () => {
