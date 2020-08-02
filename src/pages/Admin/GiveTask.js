@@ -32,10 +32,19 @@ const GiveTask = ({ userData, loading }) => {
                                             <td>{data.phone}</td>
                                             <td>-</td>
                                             <td>
-                                                <Link to={`/Tasks/create/${data.id}`} className="btn btn-success">
+                                                <Link to={{
+                                                        pathname: `/Tasks/create/${data.id}`,
+                                                        state: { data }
+                                                    }
+                                                    } 
+                                                    className="btn btn-success">
                                                     <FontAwesomeIcon icon="search-plus" />
                                                 </Link>
-                                                <Link to={`/Tasks/listTask/${data.id}`} className="btn btn-info">
+                                                <Link to={{
+                                                        pathname: `/Tasks/listTask/${data.id}`,
+                                                        state: { data }
+                                                    }} 
+                                                    className="btn btn-info">
                                                     <FontAwesomeIcon icon="tasks" />
                                                 </Link>
                                             </td>

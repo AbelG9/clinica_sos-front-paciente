@@ -6,7 +6,7 @@ import URL from '../../config/URL';
 import GiveTask from './GiveTask';
 import TaskCard from '../TaskManager/TaskCard';
 import Loarder from '../../components/Loader';
-import { Alert } from 'reactstrap';
+import { Alert, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
 const Task = () => {
     const { state } = useContext(AuthContext);
@@ -14,6 +14,7 @@ const Task = () => {
     const [loading, setLoading] = useState(false);
     const [tab, setTab] = useState(1);
     const [routeTask, setRouteTask] = useState('getUserTask');
+    const [breadCumb, setBreadCumb] = useState('Crear tareas');
 
     useEffect(() => {
         const getFullTask = async () => {
@@ -42,12 +43,15 @@ const Task = () => {
         e.preventDefault();
         switch (parseInt(e.target.id)) {
             case 1:
+                setBreadCumb('Crear tareas');
                 setRouteTask('getUserTask');
                 break;
             case 2:
+                setBreadCumb('Tarea pendiente');
                 setRouteTask('getFullTasks');
                 break;
             case 3:
+                setBreadCumb('Tarea completada');
                 setRouteTask('getFullFinishedTasks');
                 break;
             default:
@@ -96,6 +100,11 @@ const Task = () => {
 
     return (
         <div>
+          <div>
+            <Breadcrumb>
+              <BreadcrumbItem active>{breadCumb}</BreadcrumbItem>
+            </Breadcrumb>
+          </div>
           <ul className="nav nav-tabs d-flex flex-row justify-content-center">
             <li className="nav-item">
               <Link

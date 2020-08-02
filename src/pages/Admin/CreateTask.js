@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import { Link, useParams, useHistory } from 'react-router-dom';
+import { Link, useParams, useHistory, useLocation } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { FormGroup, Input } from 'reactstrap';
@@ -10,6 +10,8 @@ import URL from '../../config/URL';
 import Loader from '../../components/Loader';
 
 const CreateTask = () => {
+    let location = useLocation();
+    let dataUser = typeof location.state === "undefined" ? '' : location.state.data;
     let history = useHistory();
     let { id } = useParams();
     const { state } = useContext(AuthContext);
@@ -78,6 +80,11 @@ const CreateTask = () => {
                         <BreadcrumbItem active tag="span">Asignar tarea</BreadcrumbItem>
                     </Breadcrumb>
                 </div>
+            </div>
+            <div className="d-flex flex-row justify-content-around">
+                <p><strong>Usuario: </strong> {dataUser.full_name}</p>
+                <p><strong>Rol: </strong> {dataUser.role}</p>
+                <p><strong>Celular: </strong> {dataUser.phone}</p>
             </div>
             <div className="row">
                 <div className="col">

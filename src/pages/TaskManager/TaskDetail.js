@@ -141,7 +141,7 @@ const TaskDetail = () => {
             <div className="row no-gutters mb-2">
                 <div className="col">
                     <Breadcrumb>
-                        <BreadcrumbItem><Link to="/TaskLists" onClick={goBack}>Tarea pendiente</Link></BreadcrumbItem>
+                        <BreadcrumbItem><Link to="/TaskLists" onClick={goBack}>{task.estado !== 'PENDIENTE' ? 'Tarea completada' : 'Tarea pendiente'}</Link></BreadcrumbItem>
                         <BreadcrumbItem active>Detalle</BreadcrumbItem>
                     </Breadcrumb>
                 </div>

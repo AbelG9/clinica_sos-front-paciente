@@ -100,28 +100,30 @@ const TaskList = () => {
 
   return (
     <div>
-      <ul className="nav nav-tabs d-flex flex-row justify-content-center">
-        <li className="nav-item">
-          <Link
-            className={`nav-link ${tab === 2 ? "active" : ""}`}
-            id="2"
-            to="/"
-            onClick={handleTabs}
-          >
-            Tareas pendientes
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link
-            className={`nav-link ${tab === 3 ? "active" : ""}`}
-            id="3"
-            to="/"
-            onClick={handleTabs}
-          >
-            Tareas completadas
-          </Link>
-        </li>
-      </ul>
+      <div>
+        <ul className="nav nav-tabs d-flex flex-row justify-content-center">
+          <li className="nav-item">
+            <Link
+              className={`nav-link ${tab === 2 ? "active" : ""}`}
+              id="2"
+              to="/"
+              onClick={handleTabs}
+            >
+              Tareas pendientes
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className={`nav-link ${tab === 3 ? "active" : ""}`}
+              id="3"
+              to="/"
+              onClick={handleTabs}
+            >
+              Tareas completadas
+            </Link>
+          </li>
+        </ul>
+      </div>
       {renderSwitch(tab)}
     </div>
   );
