@@ -51,7 +51,7 @@ a:focus {
 }
 
 .menu-open {
-  background: #6d7fcc;
+  background: #189b83;
 }
 
 .nav-item:hover {
@@ -61,7 +61,7 @@ a:focus {
 
 .items-menu {
   color: #fff;
-  background: #6d7fcc;
+  background: #189b83;
 }
 
 li a.dropdown-toggle::after {

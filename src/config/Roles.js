@@ -5,51 +5,72 @@ const components = {
 		url: '/admin-only',
 		title: 'Admin Only',
 		icon: 'menu',
-		module: 1
+		module: false
 	},
 	dashboard: {
 		component: 'Dashboard',
 		url: '/dashboard',
 		title: 'Dashboard',
 		icon: 'menu',
-		module: 1
+		module: false
 	},
 	Pacientes: {
 		component: 'Pacientes',
 		url: '/pacientes',
 		title: 'Pacientes',
-		icon: 'menu',
-		module: 1
+		icon: 'home',
+		module: false
 	},
 	TaskList: {
 		component: 'TaskLists',
 		url: '/TaskLists',
 		title: 'Tareas',
 		icon: 'menu',
-		module: 1
+		module: false
 	},
 	Task: {
 		component: 'Tasks',
 		url: '/Tasks',
 		title: 'Crear tareas',
-		icon: 'menu',
-		module: 1
+		icon: 'home',
+		module: false
 	},
 	Report: {
 		component: 'Report',
 		url: '/informe',
 		title: 'Informe',
-		icon: 'menu',
-		module: 1
+		icon: 'home',
+		module: false
 	},
 	UserReport: {
 		component: 'UsersReports',
 		url: '/reportUsers',
 		title: 'Informes',
-		icon: 'menu',
-		module: 1
+		icon: 'home',
+		module: false
 	}
 };
+
+const modules = {
+	ventas: {
+		module: true,
+		title: 'ventas',
+		icon: 'home',
+		items: [
+			components.UserReport,
+			components.Task,
+		]
+	},
+	compras: {
+		module: true,
+		title: 'compras',
+		icon: 'home',
+		items: [
+			components.Pacientes,
+			components.Report,
+		]
+	}
+}
 
 // component's access to roles.
 const rolesConfig = {
@@ -70,6 +91,13 @@ const rolesConfig = {
 		routes: [
 			components.TaskList,
 			components.Report
+		]
+	},
+	prueba: {
+		routes: [
+			modules.ventas,
+			components.dashboard,
+			modules.compras,
 		]
 	}
 };
